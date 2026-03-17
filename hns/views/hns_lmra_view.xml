@@ -1,0 +1,103 @@
+
+<odoo>
+
+    <!-- FORM VIEW -->
+    <record id="hns_lmra_view_form" model="ir.ui.view">
+        <field name="name">hns.lmra.form</field>
+        <field name="model">hns.lmra</field>
+        <field name="arch" type="xml">
+            <form string="LMRA Sicherheitscheck">
+
+                <header>
+					<div>
+                    <button name="action_send" type="object" string="Send"/>
+					<button name="%(action_hns_lmra_report)d" type="action" string="Print PDF" class="btn-primary"/>
+					</div>	
+                </header>
+                
+                <sheet>
+
+                    <!-- Frage 1 -->
+                    <group string="1. Kenne ich densadw Inhaltfdsdfd dedeeeeeddddddfsfewfrccccc">
+                        <field name="q1_yes"/>
+                        <field name="q1_no"/>
+                    </group>
+
+                    <!-- Frage 2 -->
+                    <group string="2. Weiss ich, wo Notausgänge ...">
+                        <field name="q2_yes"/>
+                        <field name="q2_no"/>
+                    </group>
+
+                    <!-- Frage 3 -->
+                    <group string="3. Ist gewährleistet, ...">
+                        <field name="q3_yes"/>
+                        <field name="q3_no"/>
+                    </group>
+
+                    <!-- Frage 4 -->
+                    <group string="4. Bin ich mit den Arbeiten ...">
+                        <field name="q4_yes"/>
+                        <field name="q4_no"/>
+                    </group>
+
+                    <!-- Frage 5 -->
+                    <group string="5. Halte ich die Arbeitsmethode für sicher?">
+                        <field name="q5_yes"/>
+                        <field name="q5_no"/>
+                    </group>
+
+                    <!-- Frage 6 -->
+                    <group string="6. Verfüge ich über geeignete PSA?">
+                        <field name="q6_yes"/>
+                        <field name="q6_no"/>
+                    </group>
+
+                    <!-- Frage 7 -->
+                    <group string="7. Verfüge ich über geeignetes Werkzeug?">
+                        <field name="q7_yes"/>
+                        <field name="q7_no"/>
+                    </group>
+
+                    <!-- Frage 8 -->
+                    <group string="8. Haben wir Rücksprache gehalten?">
+                        <field name="q8_yes"/>
+                        <field name="q8_no"/>
+                    </group>
+
+                    <!-- Frage 9 -->
+                    <group string="9. Empfinde ich meinen Arbeitsplatz als sicher?">
+                        <field name="q9_yes"/>
+                        <field name="q9_no"/>
+                    </group>
+
+                    <!-- Frage 10 -->
+                    <group string="10. Fühle ich mich körperlich ...">
+                        <field name="q10_yes"/>
+                        <field name="q10_no"/>
+                    </group>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+
+
+    <record id="hns_lmra_action" model="ir.actions.act_window">
+        <field name="name">LMRA Formularic</field>
+        <field name="res_model">hns.lmra</field>
+        <field name="view_mode">list,form</field>
+        <field name="limit">5</field>   
+    </record>
+
+
+
+</odoo>
+
+
+
+
+
+
+
+

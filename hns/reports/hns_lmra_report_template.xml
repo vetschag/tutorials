@@ -1,0 +1,87 @@
+<odoo>
+    <template id="lmra_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <div class="page">
+                    <h2>LMRA Sicherheitscheck</h2>
+
+                    <t t-foreach="docs" t-as="o">
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Frage</th>
+                                <th>Ja</th>
+                                <th>Nein</th>
+                            </tr>
+
+                            <tr>
+                                <td>1. Kenne ich den Inhalt der Arbeitserlaubnis?</td>
+                                <td><span t-esc="o.q1_yes"/></td>
+                                <td><span t-esc="o.q1_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>2. Weiss ich, wo Notausgänge sind?</td>
+                                <td><span t-esc="o.q2_yes"/></td>
+                                <td><span t-esc="o.q2_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>3. Ist gewährleistet ...</td>
+                                <td><span t-esc="o.q3_yes"/></td>
+                                <td><span t-esc="o.q3_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>4. Bin ich mit den Arbeiten vertraut?</td>
+                                <td><span t-esc="o.q4_yes"/></td>
+                                <td><span t-esc="o.q4_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>5. Halte ich die Arbeitsmethode für sicher?</td>
+                                <td><span t-esc="o.q5_yes"/></td>
+                                <td><span t-esc="o.q5_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>6. Verfüge ich über geeignete PSA?</td>
+                                <td><span t-esc="o.q6_yes"/></td>
+                                <td><span t-esc="o.q6_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>7. Verfüge ich über geeignetes Werkzeug?</td>
+                                <td><span t-esc="o.q7_yes"/></td>
+                                <td><span t-esc="o.q7_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>8. Haben wir Rücksprache gehalten?</td>
+                                <td><span t-esc="o.q8_yes"/></td>
+                                <td><span t-esc="o.q8_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>9. Empfinde ich meinen Arbeitsplatz als sicher?</td>
+                                <td><span t-esc="o.q9_yes"/></td>
+                                <td><span t-esc="o.q9_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>10. Fühle ich mich körperlich bereit?</td>
+                                <td><span t-esc="o.q10_yes"/></td>
+                                <td><span t-esc="o.q10_no"/></td>
+                            </tr>
+
+                        </table>
+
+                    </t>
+
+                </div>
+
+            </t>
+        </t>
+    </template>
+</odoo>

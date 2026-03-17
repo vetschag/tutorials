@@ -1,0 +1,140 @@
+<odoo>
+    <template id="lmra_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+            <div class="page">
+
+                <style>
+                    .no-border { border: none !important; }
+                    .center { text-align: center; }
+                    .background { background:#f5f5f5; }
+                </style>
+
+                <!-- Titel -->
+                <h2 style="color:#b02a2a; margin-bottom:20px;">
+                    LMRA Sicherheitscheck
+                </h2>
+
+                <t t-foreach="docs" t-as="o">
+
+                    <table class="table table-sm" style="width:100%; border-collapse:collapse;">
+                        <thead style="border-bottom:2px solid #444;">
+                            <tr>
+                                <th style="width:80%">Frage</th>
+                                <th style="width:10%; text-align:center;">Ja</th>
+                                <th style="width:10%; text-align:center;">Nein</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="no-border">
+                                <td class="no-border">1. Kenne ich den Inhalt der Arbeitserlaubnis?</td>
+                                <td class="no-border center"><span t-esc="o.q1_yes"/></td>
+                                <td class="no-border center"><span t-esc="o.q1_no"/></td>
+                            </tr>
+
+                            <tr class= "no-border background">
+                                <td class="no-border">2. Weiss ich, wo Notausgänge sind?</td>
+                                <td class="no-border center"><span t-esc="o.q2_yes"/></td>
+                                <td class="no-border center"><span t-esc="o.q2_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>3. Ist gewährleistet ...</td>
+                                <td style="text-align:center;"><span t-esc="o.q3_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q3_no"/></td>
+                            </tr>
+
+                            <tr style="background:#f5f5f5;">
+                                <td>4. Bin ich mit den Arbeiten vertraut?</td>
+                                <td style="text-align:center;"><span t-esc="o.q4_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q4_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>5. Halte ich die Arbeitsmethode für sicher?</td>
+                                <td style="text-align:center;"><span t-esc="o.q5_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q5_no"/></td>
+                            </tr>
+
+                            <tr style="background:#f5f5f5;">
+                                <td>6. Verfüge ich über geeignete PSA?</td>
+                                <td style="text-align:center;"><span t-esc="o.q6_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q6_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>7. Verfüge ich über geeignetes Werkzeug?</td>
+                                <td style="text-align:center;"><span t-esc="o.q7_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q7_no"/></td>
+                            </tr>
+
+                            <tr style="background:#f5f5f5;">
+                                <td>8. Haben wir Rücksprache gehalten?</td>
+                                <td style="text-align:center;"><span t-esc="o.q8_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q8_no"/></td>
+                            </tr>
+
+                            <tr>
+                                <td>9. Empfinde ich meinen Arbeitsplatz als sicher?</td>
+                                <td style="text-align:center;"><span t-esc="o.q9_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q9_no"/></td>
+                            </tr>
+
+                            <tr style="background:#f5f5f5;">
+                                <td>10. Fühle ich mich körperlich bereit?</td>
+                                <td style="text-align:center;"><span t-esc="o.q10_yes"/></td>
+                                <td style="text-align:center;"><span t-esc="o.q10_no"/></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </t>
+
+
+
+                    <ul>
+                        <t t-foreach="docs" t-as="o">
+                            <li>
+                                <span t-esc="o.q1_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q2_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q3_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q4_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q5_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q6_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q7_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q8_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q9_yes"/>
+                            </li>
+                            <li>
+                                <span t-esc="o.q10_yes"/>
+                            </li>
+                        </t>
+                    </ul>
+
+            </div>
+
+        </t>
+    </t>
+</template>
+
+
+</odoo>

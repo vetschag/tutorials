@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="action_hns_lmra_report" model="ir.actions.report">
+        <field name="name">LMRA Report</field>
+        <field name="model">hns.lmra</field>
+        <field name="report_type">qweb-pdf</field>
+
+        <field name="report_name">hns.lmra_report_template</field>
+        <field name="report_file">hns.lmra_report_template</field>
+
+        <field name="binding_model_id" ref="model_hns_lmra"/>
+        <field name="binding_type">report</field>
+
+    </record>
+
+</odoo>
+

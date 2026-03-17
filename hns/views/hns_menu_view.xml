@@ -1,0 +1,17 @@
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="hns_menu_root" name="Health/Safety25"/>
+
+    <!-- First-level menus directly under root -->
+    <menuitem id="hns_lmra_menu_first_level" name="LMRA" parent="hns_menu_root"/>
+    <menuitem id="hns_powra_menu_first_level" name="POWRA" parent="hns_menu_root" action="hns_powra_action"/>
+
+    <!-- Actions directly under their corresponding first-level menu -->
+    <menuitem id="hns_lmra_menu_action" name="LMRA Formular1" parent="hns_lmra_menu_first_level" action="hns_lmra_action"/>
+   <!-- <menuitem id="hns_powra_menu_action" name="POWRA Formular" parent="hns_powra_menu_first_level" action="hns_powra_action"/>  -->
+
+   
+</odoo>
+
+
+
