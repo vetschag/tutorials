@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- ═══════════════════════════════════════════════════════
+         HAUPT WIDGET
+    ════════════════════════════════════════════════════════ -->
+    <t t-name="plant.PlantTreeWidget">
+        <div class="plant-tree-widget">
+
+            <t t-if="state.loading">
+                <div class="tree-loading">
+                    <i class="fa fa-spinner fa-spin"/> Lädt...
+                </div>
+            </t>
+
+            <t t-else="">
+                <div class="tree-header">
+                    <span>Name</span>
+                    <span>Typ</span>
+                    <span>Wert</span>
+                </div>
+                <div class="tree-body">
+                    <t t-foreach="state.tree" t-as="block" t-key="block.id">
+                        <TreeNode
+                            node="block"
+                            level="0"
+                            onSave="() => this.onSave()"
+                        />
+                    </t>
+                </div>
+            </t>
+
+        </div>
+    </t>
+
+    <!-- ═══════════════════════════════════════════════════════
+         BAUM-KNOTEN — rekursiv
+    ════════════════════════════════════════════════════════ -->
+    <t t-name="plant.TreeNode">
+
+        <div t-attf-class="tree-row level-{{ props.level }}"
+             t-on-click="toggle">
+
+            <div class="tree-label">
+                <t t-if="hasChildren">
+                    <i t-attf-class="fa fa-chevron-right tree-toggle {{ state.open ? 'open' : '' }}"/>
+                </t>
+                <t t-else="">
+                    <span class="tree-toggle-placeholder"/>
+                </t>
+
+                <t t-if="props.level === 0">
+                    <i class="fa fa-cube tree-icon icon-block"/>
+                </t>
+                <t t-elif="props.level === 1">
+                    <i class="fa fa-cogs tree-icon icon-agg"/>
+                </t>
+                <t t-elif="props.level === 2">
+                    <i class="fa fa-tag tree-icon icon-type"/>
+                </t>
+                <t t-else="">
+                    <i class="fa fa-circle-o tree-icon icon-field"/>
+                </t>
+
+                <span class="tree-name"><t t-esc="props.node.name"/></span>
+            </div>
+
+            <div class="tree-type">
+                <t t-if="props.node.field_type === 'text'">
+                    <span class="badge badge-text">Text</span>
+                </t>
+                <t t-elif="props.node.field_type === 'image'">
+                    <span class="badge badge-image">Image</span>
+                </t>
+                <t t-elif="props.node.field_type === 'selection'">
+                    <span class="badge badge-selection">Selection</span>
+                </t>
+            </div>
+
+            <div class="tree-value" t-on-click.stop="">
+                <t t-if="props.node.field_type">
+                    <TreeField
+                        field="props.node"
+                        onSave="props.onSave"
+                    />
+                </t>
+            </div>
+
+        </div>
+
+        <t t-if="state.open and hasChildren">
+            <t t-foreach="props.node.children" t-as="child" t-key="child.id">
+                <TreeNode
+                    node="child"
+                    level="props.level + 1"
+                    onSave="props.onSave"
+                />
+            </t>
+        </t>
+
+    </t>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FELD — Text / Image / Selection
+    ════════════════════════════════════════════════════════ -->
+    <t t-name="plant.TreeField">
+
+        <!-- TEXT -->
+        <t t-if="props.field.field_type === 'text'">
+            <t t-if="state.editing">
+                <input
+                    class="tree-input"
+                    t-att-value="props.field.value_text"
+                    t-on-blur="saveText"
+                    t-on-keydown="onKeydown"
+                />
+            </t>
+            <t t-else="">
+                <span class="tree-value-text" t-on-click="startEdit">
+                    <t t-if="props.field.value_text">
+                        <t t-esc="props.field.value_text"/>
+                    </t>
+                    <t t-else="">
+                        <span class="tree-value-empty">— klicken zum Bearbeiten</span>
+                    </t>
+                </span>
+            </t>
+        </t>
+
+        <!-- IMAGE -->
+        <t t-elif="props.field.field_type === 'image'">
+            <div class="tree-image-wrap">
+                <t t-if="props.field.value_image">
+                    <img t-attf-src="data:image/png;base64,{{ props.field.value_image }}"
+                         class="tree-image-preview"/>
+                </t>
+                <label class="tree-upload-btn">
+                    <i class="fa fa-upload"/>
+                    <t t-if="props.field.value_image"> Ändern</t>
+                    <t t-else=""> Hochladen</t>
+                    <input type="file" accept="image/*"
+                           t-on-change="saveImage" style="display:none"/>
+                </label>
+            </div>
+        </t>
+
+        <!-- SELECTION -->
+        <t t-elif="props.field.field_type === 'selection'">
+            <t t-if="state.editing">
+                <select class="tree-select"
+                        t-on-change="saveSelection"
+                        t-on-blur="() => this.state.editing = false">
+                    <option value="">— Auswählen —</option>
+                    <t t-foreach="props.field.selectionOptions" t-as="opt" t-key="opt.id">
+                        <option
+                            t-att-value="opt.id"
+                            t-att-selected="opt.id === props.field.value_selection">
+                            <t t-esc="opt.name"/>
+                        </option>
+                    </t>
+                </select>
+            </t>
+            <t t-else="">
+                <!-- value_selection_name statt value_selection[1] — kein Reload nötig! -->
+                <span class="tree-value-text" t-on-click="startEdit">
+                    <t t-if="props.field.value_selection_name">
+                        <t t-esc="props.field.value_selection_name"/>
+                    </t>
+                    <t t-else="">
+                        <span class="tree-value-empty">— auswählen</span>
+                    </t>
+                </span>
+            </t>
+        </t>
+
+    </t>
+
+</templates>

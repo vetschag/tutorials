@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ── Report Action ── -->
+    <record id="action_report_plant_template" model="ir.actions.report">
+        <field name="name">Plant Template Report</field>
+        <field name="model">plant.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">plant.report_plant_template</field>
+        <field name="report_file">plant.report_plant_template</field>
+        <field name="binding_model_id" ref="model_plant_template"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- ── Print Button in Form View ── -->
+    <record id="view_plant_template_form_report_btn" model="ir.ui.view">
+        <field name="name">plant.template.form.report.btn</field>
+        <field name="model">plant.template</field>
+        <field name="inherit_id" ref="plant.view_plant_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="%(plant.action_report_plant_template)d"
+                            string="PDF Drucken"
+                            type="action"
+                            class="btn-primary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

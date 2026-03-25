@@ -1,0 +1,149 @@
+/* ═══════════════════════════════════════════════
+   Plant Tree Widget — Styles
+════════════════════════════════════════════════ */
+
+.plant-tree-widget {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+/* Header */
+.tree-header {
+    display: grid;
+    grid-template-columns: 1fr 100px 220px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Zeilen */
+.tree-row {
+    display: grid;
+    grid-template-columns: 1fr 100px 220px;
+    padding: 6px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+.tree-row:hover { background: #f8f9fa; }
+.tree-row:last-child { border-bottom: none; }
+
+/* Einrückung je Ebene */
+.tree-row.level-0 .tree-label { padding-left: 0px;  font-weight: 600; }
+.tree-row.level-1 .tree-label { padding-left: 20px; font-weight: 500; color: #495057; }
+.tree-row.level-2 .tree-label { padding-left: 40px; color: #495057; }
+.tree-row.level-3 .tree-label { padding-left: 60px; color: #6c757d; }
+
+/* Label */
+.tree-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+}
+.tree-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Toggle Pfeil */
+.tree-toggle {
+    font-size: 10px;
+    color: #adb5bd;
+    transition: transform 0.15s;
+    width: 12px;
+    flex-shrink: 0;
+}
+.tree-toggle.open { transform: rotate(90deg); }
+.tree-toggle-placeholder { width: 12px; flex-shrink: 0; display: inline-block; }
+
+/* Icons */
+.tree-icon      { font-size: 13px; flex-shrink: 0; }
+.icon-block     { color: #0d6efd; }
+.icon-agg       { color: #fd7e14; }
+.icon-type      { color: #6c757d; }
+.icon-field     { color: #adb5bd; font-size: 8px; }
+
+/* Badges */
+.badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+.badge-text      { background: #e9ecef; color: #495057; }
+.badge-image     { background: #fff3cd; color: #856404; }
+.badge-selection { background: #cfe2ff; color: #084298; }
+
+/* Wert */
+.tree-value-text {
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.1s;
+    display: inline-block;
+}
+.tree-value-text:hover { background: #e9ecef; }
+.tree-value-empty {
+    color: #adb5bd;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Inline Inputs */
+.tree-input {
+    width: 100%;
+    border: 1px solid #0d6efd;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 13px;
+    outline: none;
+}
+.tree-select {
+    width: 100%;
+    border: 1px solid #0d6efd;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 13px;
+    outline: none;
+    background: white;
+}
+
+/* Image */
+.tree-image-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.tree-image-preview {
+    height: 32px;
+    width: auto;
+    border-radius: 3px;
+    border: 1px solid #dee2e6;
+}
+.tree-upload-btn {
+    font-size: 12px;
+    color: #0d6efd;
+    cursor: pointer;
+    padding: 2px 8px;
+    border: 1px solid #0d6efd;
+    border-radius: 4px;
+    transition: background 0.1s;
+}
+.tree-upload-btn:hover { background: #e7f1ff; }
+
+/* Ladeindikator */
+.tree-loading {
+    padding: 24px;
+    text-align: center;
+    color: #6c757d;
+}

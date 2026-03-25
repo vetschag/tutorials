@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- Plant -->
+    <record id="plant_zuerich" model="plant.plant">
+      <field name="name">Werk Zürich</field>
+    </record>
+
+    <!-- Template -->
+    <record id="template_2025" model="plant.template">
+      <field name="name">Werk Zürich — Template 2025</field>
+      <field name="plant_id" ref="plant_zuerich"/>
+      <field name="state">active</field>
+    </record>
+
+    <!-- Block A -->
+    <record id="block_a" model="plant.block">
+      <field name="name">Block A — Förderband</field>
+      <field name="template_id" ref="template_2025"/>
+    </record>
+
+    <!-- Aggregat BMA -->
+    <record id="agg_bma" model="plant.aggregate">
+      <field name="name">BMA — Antrieb</field>
+      <field name="block_id" ref="block_a"/>
+    </record>
+
+    <!-- Typ Scrapers -->
+    <record id="type_scrapers" model="plant.type">
+      <field name="name">Scrapers</field>
+      <field name="aggregate_id" ref="agg_bma"/>
+    </record>
+
+    <!-- Felder für Scrapers -->
+    <record id="field_plow" model="plant.field">
+      <field name="name">plowScrapers</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">selection</field>
+    </record>
+    <record id="field_bearings" model="plant.field">
+      <field name="name">bearings</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">selection</field>
+    </record>
+    <record id="field_gearbox" model="plant.field">
+      <field name="name">gearbox</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">selection</field>
+    </record>
+    <record id="field_tensioners" model="plant.field">
+      <field name="name">tensioners</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">text</field>
+    </record>
+    <record id="field_tasks1" model="plant.field">
+      <field name="name">additionalTasks1</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">text</field>
+      <field name="value_text">zzzzz</field>
+    </record>
+    <record id="field_image1" model="plant.field">
+      <field name="name">image1</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">image</field>
+    </record>
+
+    <!-- Auswahloptionen für plowScrapers -->
+    <record id="sel_vorhanden" model="plant.selection">
+      <field name="name">Vorhanden</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+    <record id="sel_nicht_vorhanden" model="plant.selection">
+      <field name="name">Nicht vorhanden</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+    <record id="sel_defekt" model="plant.selection">
+      <field name="name">Defekt</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+
+    <!-- Typ Elektromotor -->
+    <record id="type_motor" model="plant.type">
+      <field name="name">Elektromotor</field>
+      <field name="aggregate_id" ref="agg_bma"/>
+    </record>
+    <record id="field_leistung" model="plant.field">
+      <field name="name">leistung</field>
+      <field name="type_id" ref="type_motor"/>
+      <field name="field_type">text</field>
+      <field name="value_text">22 kW</field>
+    </record>
+
+    <!-- Aggregat BMB -->
+    <record id="agg_bmb" model="plant.aggregate">
+      <field name="name">BMB — Umlenkung</field>
+      <field name="block_id" ref="block_a"/>
+    </record>
+    <record id="type_trommel" model="plant.type">
+      <field name="name">Trommel</field>
+      <field name="aggregate_id" ref="agg_bmb"/>
+    </record>
+    <record id="field_zustand" model="plant.field">
+      <field name="name">zustand</field>
+      <field name="type_id" ref="type_trommel"/>
+      <field name="field_type">selection</field>
+    </record>
+
+    <!-- Block B -->
+    <record id="block_b" model="plant.block">
+      <field name="name">Block B — Siebanlage</field>
+      <field name="template_id" ref="template_2025"/>
+    </record>
+    <record id="agg_sba" model="plant.aggregate">
+      <field name="name">SBA — Sieb 1</field>
+      <field name="block_id" ref="block_b"/>
+    </record>
+
+  </data>
+</odoo>

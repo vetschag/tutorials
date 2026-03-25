@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_plant_template_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <!-- Titel -->
+                <div style="margin-bottom: 24px;">
+                    <h2 style="margin:0;"><t t-esc="doc.name"/></h2>
+                    <p style="margin:4px 0 0; color:#6c757d; font-size:13px;">
+                        Plant: <t t-esc="doc.plant_id.name"/>
+                    </p>
+                </div>
+
+                <!-- Inhaltsverzeichnis -->
+                <h4>Table of Contents</h4>
+                <t t-set="block_num" t-value="0"/>
+                <t t-foreach="doc.plant_id.block_ids" t-as="block">
+                    <t t-set="block_num" t-value="block_num + 1"/>
+                    <div style="font-size:13px; font-weight:600; margin-top:6px;">
+                        <t t-esc="block_num"/>. <t t-esc="block.name"/>
+                    </div>
+                    <t t-set="agg_num" t-value="0"/>
+                    <t t-foreach="block.aggregate_ids" t-as="agg">
+                        <t t-set="agg_num" t-value="agg_num + 1"/>
+                        <div style="font-size:12px; margin-left:20px; color:#444;">
+                            <t t-esc="block_num"/>.<t t-esc="agg_num"/>. <t t-esc="agg.name"/>
+                        </div>
+                    </t>
+                </t>
+
+                <div style="page-break-after:always;"/>
+
+                <!-- Inhalt -->
+                <t t-set="block_num" t-value="0"/>
+                <t t-foreach="doc.plant_id.block_ids" t-as="block">
+                    <t t-set="block_num" t-value="block_num + 1"/>
+
+                    <!-- Block = Haupttitel -->
+                    <h2 style="margin-top:0; border-bottom:2px solid #222; padding-bottom:6px;">
+                        <t t-esc="block_num"/>. <t t-esc="block.name"/>
+                    </h2>
+
+                    <t t-set="agg_num" t-value="0"/>
+                    <t t-foreach="block.aggregate_ids" t-as="agg">
+                        <t t-set="agg_num" t-value="agg_num + 1"/>
+
+                        <!-- Aggregat = Untertitel -->
+                        <h3 style="margin-top:20px; border-bottom:1px solid #aaa; padding-bottom:4px;">
+                            <t t-esc="block_num"/>.<t t-esc="agg_num"/>. <t t-esc="agg.name"/>
+                        </h3>
+
+                        <!-- Werte aus plant.template.value holen -->
+                        <t t-foreach="agg.type_ids" t-as="type">
+                            <t t-foreach="type.field_ids" t-as="field">
+
+                                <!-- Wert für dieses Feld im Template suchen -->
+                                <t t-set="tval" t-value="doc.value_ids.filtered(lambda v: v.field_id.id == field.id)"/>
+
+                                <t t-if="field.field_type == 'text' and tval and tval[0].value_text">
+                                    <ul style="margin:4px 0; padding-left:20px;">
+                                        <li style="font-size:12px;">
+                                            <strong><t t-esc="field.name"/>:</strong>
+                                            <t t-esc="tval[0].value_text"/>
+                                        </li>
+                                    </ul>
+                                </t>
+                                <t t-elif="field.field_type == 'selection' and tval and tval[0].value_selection_id">
+                                    <ul style="margin:4px 0; padding-left:20px;">
+                                        <li style="font-size:12px;">
+                                            <strong><t t-esc="field.name"/>:</strong>
+                                            <t t-esc="tval[0].value_selection_id.name"/>
+                                        </li>
+                                    </ul>
+                                </t>
+
+                            </t>
+                        </t>
+
+                        <!-- Bilder am Schluss des Aggregats -->
+                        <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
+                            <t t-foreach="agg.type_ids" t-as="type">
+                                <t t-foreach="type.field_ids" t-as="field">
+                                    <t t-set="tval" t-value="doc.value_ids.filtered(lambda v: v.field_id.id == field.id)"/>
+                                    <t t-if="field.field_type == 'image' and tval and tval[0].value_image">
+                                        <img t-attf-src="data:image/png;base64,{{ tval[0].value_image }}"
+                                             style="width:48%; max-width:48%; object-fit:cover;
+                                                    border-radius:4px; border:1px solid #ddd;"/>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+
+                        <div style="page-break-after:always;"/>
+
+                    </t>
+                </t>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_plant_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="plant_v2.report_plant_template_document"
+                   t-lang="doc.env.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

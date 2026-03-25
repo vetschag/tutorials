@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════
+         project.task — Plant Template Feld + Smartbutton
+    ════════════════════════════════════════════════════ -->
+    <record id="view_task_form_plant_template" model="ir.ui.view">
+        <field name="name">project.task.form.plant.template</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- Plant Template Feld nach project_id -->
+            <xpath expr="//field[@name='project_id']" position="after">
+                <group>
+                    <field name="plant_template_id"
+                           string="Plant Template"
+                           options="{'no_create': True}"
+                           style="max-width: 300px;"/>
+                </group>
+            </xpath>
+
+            <!-- Smartbutton -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_plant_template"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-industry"
+                        invisible="not plant_template_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Plant Template</span>
+                    </div>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.template — Smartbutton → Tasks
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_template_form_task_btn" model="ir.ui.view">
+        <field name="name">plant.template.form.task.btn</field>
+        <field name="model">plant.template</field>
+        <field name="inherit_id" ref="plant_v2.view_plant_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_tasks"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            invisible="task_count == 0">
+                        <field name="task_count"
+                               widget="statinfo"
+                               string="Tasks"/>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

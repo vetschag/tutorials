@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.field — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_field_form" model="ir.ui.view">
+        <field name="name">plant.field.form</field>
+        <field name="model">plant.field</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="field_type"/>
+                        <field name="type_id"/>
+                    </group>
+                    <separator string="Auswahloptionen"
+                               invisible="field_type != 'selection'"/>
+                    <field name="selection_ids"
+                           invisible="field_type != 'selection'">
+                        <list editable="bottom">
+                            <field name="name"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_field_list" model="ir.ui.view">
+        <field name="name">plant.field.list</field>
+        <field name="model">plant.field</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="field_type"/>
+                <field name="type_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_field" model="ir.actions.act_window">
+        <field name="name">Felder</field>
+        <field name="res_model">plant.field</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.type — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_type_form" model="ir.ui.view">
+        <field name="name">plant.type.form</field>
+        <field name="model">plant.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="aggregate_id"/>
+                    </group>
+                    <separator string="Felder"/>
+                    <field name="field_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="field_type"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_type_list" model="ir.ui.view">
+        <field name="name">plant.type.list</field>
+        <field name="model">plant.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="aggregate_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_type" model="ir.actions.act_window">
+        <field name="name">Typen</field>
+        <field name="res_model">plant.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.aggregate — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_aggregate_form" model="ir.ui.view">
+        <field name="name">plant.aggregate.form</field>
+        <field name="model">plant.aggregate</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="block_id"/>
+                    </group>
+                    <separator string="Typen"/>
+                    <field name="type_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_aggregate_list" model="ir.ui.view">
+        <field name="name">plant.aggregate.list</field>
+        <field name="model">plant.aggregate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="block_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_aggregate" model="ir.actions.act_window">
+        <field name="name">Aggregate</field>
+        <field name="res_model">plant.aggregate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.block — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_block_form" model="ir.ui.view">
+        <field name="name">plant.block.form</field>
+        <field name="model">plant.block</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="plant_id"/>
+                    </group>
+                    <separator string="Aggregate"/>
+                    <field name="aggregate_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_block_list" model="ir.ui.view">
+        <field name="name">plant.block.list</field>
+        <field name="model">plant.block</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="plant_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_block" model="ir.actions.act_window">
+        <field name="name">Blöcke</field>
+        <field name="res_model">plant.block</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.plant — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_plant_form" model="ir.ui.view">
+        <field name="name">plant.plant.form</field>
+        <field name="model">plant.plant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Plant Name..."/></h1>
+                    </div>
+                    <notebook>
+                        <page string="Blöcke">
+                            <field name="block_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_plant_list" model="ir.ui.view">
+        <field name="name">plant.plant.list</field>
+        <field name="model">plant.plant</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_plant" model="ir.actions.act_window">
+        <field name="name">Plants</field>
+        <field name="res_model">plant.plant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         plant.template — Form View
+    ════════════════════════════════════════════════════ -->
+    <record id="view_plant_template_form" model="ir.ui.view">
+        <field name="name">plant.template.form</field>
+        <field name="model">plant.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(plant_v2.action_report_plant_template)d"
+                            string="PDF Drucken"
+                            type="action"
+                            class="btn-primary"/>
+                    <button name="action_generate_values"
+                            string="Struktur neu laden"
+                            type="object"
+                            class="btn-secondary"
+                            confirm="Achtung: Alle bestehenden Werte werden gelöscht. Fortfahren?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="z.B. Zürich 2027"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="plant_id"/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <separator string="Werte ausfüllen"/>
+                    <widget name="plant_tree_widget"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_plant_template_list" model="ir.ui.view">
+        <field name="name">plant.template.list</field>
+        <field name="model">plant.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="plant_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_plant_template" model="ir.actions.act_window">
+        <field name="name">Templates</field>
+        <field name="res_model">plant.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════
+         Menü
+    ════════════════════════════════════════════════════ -->
+    <menuitem id="menu_plant_root"
+              name="Plant"
+              sequence="10"/>
+
+    <menuitem id="menu_plant_templates"
+              name="Templates"
+              parent="menu_plant_root"
+              action="action_plant_template"
+              sequence="10"/>
+
+    <menuitem id="menu_plant_config"
+              name="Konfiguration"
+              parent="menu_plant_root"
+              sequence="90"/>
+
+    <menuitem id="menu_plant_plants"
+              name="Plants"
+              parent="menu_plant_config"
+              action="action_plant_plant"
+              sequence="10"/>
+
+    <menuitem id="menu_plant_blocks"
+              name="Blöcke"
+              parent="menu_plant_config"
+              action="action_plant_block"
+              sequence="20"/>
+
+    <menuitem id="menu_plant_aggregates"
+              name="Aggregate"
+              parent="menu_plant_config"
+              action="action_plant_aggregate"
+              sequence="30"/>
+
+    <menuitem id="menu_plant_types"
+              name="Typen"
+              parent="menu_plant_config"
+              action="action_plant_type"
+              sequence="40"/>
+
+    <menuitem id="menu_plant_fields"
+              name="Felder"
+              parent="menu_plant_config"
+              action="action_plant_field"
+              sequence="50"/>
+
+</odoo>

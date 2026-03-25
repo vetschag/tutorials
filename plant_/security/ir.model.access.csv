@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_plant_plant,plant.plant,model_plant_plant,base.group_user,1,1,1,1
+access_plant_template,plant.template,model_plant_template,base.group_user,1,1,1,1
+access_plant_block,plant.block,model_plant_block,base.group_user,1,1,1,1
+access_plant_aggregate,plant.aggregate,model_plant_aggregate,base.group_user,1,1,1,1
+access_plant_type,plant.type,model_plant_type,base.group_user,1,1,1,1
+access_plant_field,plant.field,model_plant_field,base.group_user,1,1,1,1
+access_plant_selection,plant.selection,model_plant_selection,base.group_user,1,1,1,1

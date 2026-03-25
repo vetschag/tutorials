@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- Plant (Struktur einmalig) -->
+    <record id="plant_zuerich" model="plant.plant">
+      <field name="name">Werk Zürich</field>
+    </record>
+
+    <!-- Block A -->
+    <record id="block_a" model="plant.block">
+      <field name="name">Block A — Förderband</field>
+      <field name="plant_id" ref="plant_zuerich"/>
+    </record>
+
+    <!-- Aggregat BMA -->
+    <record id="agg_bma" model="plant.aggregate">
+      <field name="name">BMA — Antrieb</field>
+      <field name="block_id" ref="block_a"/>
+    </record>
+
+    <!-- Typ Scrapers -->
+    <record id="type_scrapers" model="plant.type">
+      <field name="name">Scrapers</field>
+      <field name="aggregate_id" ref="agg_bma"/>
+    </record>
+
+    <!-- Felder (nur Struktur, keine Werte!) -->
+    <record id="field_plow" model="plant.field">
+      <field name="name">plowScrapers</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">selection</field>
+    </record>
+    <record id="sel_vorhanden" model="plant.selection">
+      <field name="name">Vorhanden</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+    <record id="sel_defekt" model="plant.selection">
+      <field name="name">Defekt</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+    <record id="sel_nicht_vorhanden" model="plant.selection">
+      <field name="name">Nicht vorhanden</field>
+      <field name="field_id" ref="field_plow"/>
+    </record>
+
+    <record id="field_tasks" model="plant.field">
+      <field name="name">additionalTasks</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">text</field>
+    </record>
+
+    <record id="field_image1" model="plant.field">
+      <field name="name">image1</field>
+      <field name="type_id" ref="type_scrapers"/>
+      <field name="field_type">image</field>
+    </record>
+
+    <!-- Template Zürich 2026 (Werte werden auto generiert) -->
+    <record id="template_2026" model="plant.template">
+      <field name="name">Zürich 2026</field>
+      <field name="plant_id" ref="plant_zuerich"/>
+      <field name="state">active</field>
+    </record>
+
+    <!-- Template Zürich 2027 (leere Werte — bereit zum Ausfüllen) -->
+    <record id="template_2027" model="plant.template">
+      <field name="name">Zürich 2027</field>
+      <field name="plant_id" ref="plant_zuerich"/>
+      <field name="state">draft</field>
+    </record>
+
+  </data>
+</odoo>
