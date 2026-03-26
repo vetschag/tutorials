@@ -147,3 +147,18 @@
     text-align: center;
     color: #6c757d;
 }
+
+/* Drag & Drop */
+.tree-image-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    border: 1.5px dashed transparent;
+    transition: all 0.15s;
+}
+.tree-image-wrap.drag-over {
+    border-color: #0d6efd;
+    background: #e8f0fe;
+}

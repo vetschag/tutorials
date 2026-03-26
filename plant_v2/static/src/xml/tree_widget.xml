@@ -129,15 +129,19 @@
 
         <!-- IMAGE -->
         <t t-elif="props.field.field_type === 'image'">
-            <div class="tree-image-wrap">
+            <div t-att-class="state.dragover ? 'tree-image-wrap drag-over' : 'tree-image-wrap'"
+                 t-on-dragover="onDragOver"
+                 t-on-dragleave="onDragLeave"
+                 t-on-drop="onDrop">
                 <t t-if="props.field.value_image">
                     <img t-attf-src="data:image/png;base64,{{ props.field.value_image }}"
                          class="tree-image-preview"/>
                 </t>
                 <label class="tree-upload-btn">
-                    <i class="fa fa-upload"/>
-                    <t t-if="props.field.value_image"> Ändern</t>
-                    <t t-else=""> Hochladen</t>
+                    <i t-att-class="state.dragover ? 'fa fa-folder-open' : 'fa fa-upload'"/>
+                    <t t-if="state.dragover"> Loslassen...</t>
+                    <t t-elif="props.field.value_image"> Ändern</t>
+                    <t t-else=""> Hochladen oder ziehen</t>
                     <input type="file" accept="image/*"
                            t-on-change="saveImage" style="display:none"/>
                 </label>

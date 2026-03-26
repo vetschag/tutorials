@@ -4,17 +4,41 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, onWillStart } from "@odoo/owl";
 
-// ─── Einzelnes Feld (liest/schreibt plant.template.value) ────────────────────
 class TreeField extends Component {
     static template = "plant.TreeField";
     static props = ["field", "onSave"];
 
     setup() {
-        this.state = useState({ editing: false });
+        this.state = useState({ editing: false, dragover: false });
         this.orm = useService("orm");
     }
 
     startEdit() { this.state.editing = true; }
+
+    onDragOver(ev) {
+        ev.preventDefault();
+        this.state.dragover = true;
+    }
+
+    onDragLeave(ev) {
+        this.state.dragover = false;
+    }
+
+    async onDrop(ev) {
+        ev.preventDefault();
+        this.state.dragover = false;
+        const file = ev.dataTransfer.files[0];
+        if (!file || !file.type.startsWith("image/")) return;
+        const base64 = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result.split(",")[1]);
+            reader.readAsDataURL(file);
+        });
+        this.props.field.value_image = base64;
+        await this.orm.write("plant.template.value", [this.props.field.id], {
+            value_image: base64,
+        });
+    }
 
     onKeydown(ev) {
         if (ev.key === "Enter") this.saveText(ev);
@@ -46,19 +70,18 @@ class TreeField extends Component {
     async saveImage(ev) {
         const file = ev.target.files[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            const base64 = e.target.result.split(",")[1];
-            this.props.field.value_image = base64;
-            await this.orm.write("plant.template.value", [this.props.field.id], {
-                value_image: base64,
-            });
-        };
-        reader.readAsDataURL(file);
+        const base64 = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result.split(",")[1]);
+            reader.readAsDataURL(file);
+        });
+        this.props.field.value_image = base64;
+        await this.orm.write("plant.template.value", [this.props.field.id], {
+            value_image: base64,
+        });
     }
 }
 
-// ─── Rekursiver Baum-Knoten ───────────────────────────────────────────────────
 class TreeNode extends Component {
     static template = "plant.TreeNode";
     static props = ["node", "level", "onSave"];
@@ -77,7 +100,6 @@ class TreeNode extends Component {
 }
 TreeNode.components = { TreeField, TreeNode };
 
-// ─── Haupt-Widget ─────────────────────────────────────────────────────────────
 export class PlantTreeWidget extends Component {
     static template = "plant.PlantTreeWidget";
     static props = ["record"];
@@ -90,7 +112,6 @@ export class PlantTreeWidget extends Component {
     }
 
     async loadTree() {
-        // Noch nicht gespeichert — nichts laden
         if (!this.props.record.resId) {
             this.state.loading = false;
             return;
@@ -98,7 +119,6 @@ export class PlantTreeWidget extends Component {
         this.state.loading = true;
         const templateId = this.props.record.resId;
 
-        // Alle Werte des Templates laden
         const values = await this.orm.searchRead(
             "plant.template.value",
             [["template_id", "=", templateId]],
@@ -107,7 +127,6 @@ export class PlantTreeWidget extends Component {
              "value_text", "value_image", "value_selection_id"]
         );
 
-        // Blocks laden (für Namen + Reihenfolge)
         const template = await this.orm.read(
             "plant.template", [templateId], ["plant_id"]
         );
@@ -120,7 +139,6 @@ export class PlantTreeWidget extends Component {
             { order: "id asc" }
         );
 
-        // Baum aufbauen aus den geladenen Daten
         for (const block of blocks) {
             block.children = [];
             block.type = "block";
@@ -147,7 +165,6 @@ export class PlantTreeWidget extends Component {
                     type.children = [];
                     type.type = "type";
 
-                    // Felder = plant.template.value für diesen Typ
                     const typeValues = values.filter(
                         v => v.type_id && v.type_id[0] === type.id
                     );
@@ -157,7 +174,6 @@ export class PlantTreeWidget extends Component {
                         val.name = val.field_name;
                         val.type = "field";
 
-                        // Selection Optionen laden
                         if (val.field_type === "selection") {
                             val.selectionOptions = await this.orm.searchRead(
                                 "plant.selection",

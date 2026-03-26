@@ -225,6 +225,10 @@
                             string="PDF Drucken"
                             type="action"
                             class="btn-primary"/>
+                    <button name="action_download_docx"
+                            string="Word Drucken"
+                            type="object"
+                            class="btn-secondary"/>
                     <button name="action_generate_values"
                             string="Struktur neu laden"
                             type="object"

@@ -38,6 +38,14 @@ class PlantTemplate(models.Model):
             "context": {"default_plant_template_id": self.id},
         }
 
+    def action_download_docx(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/plant/template/{self.id}/docx",
+            "target": "new",
+        }
+
     def action_generate_values(self):
         self.ensure_one()
         if not self.plant_id:
